@@ -4,6 +4,7 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+
 public_users.post("/register", (req,res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -20,24 +21,10 @@ public_users.post("/register", (req,res) => {
 
 });
 
-// Get the book list available in the shop using Callbacks
-//Creating a promise method. The promise will get resolved when timer times out after 6 seconds.
-let getBookList = new Promise((resolve,reject) => {
-  setTimeout(() => {
-    const booksList = JSON.stringify(books,null,4);
-    resolve(booksList);
-  },6000)})
-
-//Console log before calling the promise
-console.log("Waiting to fetch list of books...");
-
-//Call the promise and wait for it to be resolved, and then print a message.
-getBookList.then((successMessage) => {
-  console.log("Fetching list of books..." + successMessage);
-
-//Console log after calling the promise
-console.log("List of books fetched successfully!");
-
+// Get the book list available in the shop
+public_users.get('/',function (req, res) {
+  res.send(JSON.stringify(books,null,4));
+  
 });
 
 // Get book details based on ISBN
